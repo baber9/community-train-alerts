@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Train Alerts</title>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    // Load environment variables from server (we'll serve them via a small script tag below)
+    const ONESIGNAL_APP_ID = import.meta.env?.VITE_ONESIGNAL_APP_ID || "YOUR_FALLBACK_APP_ID";
+    const COMMUNITY_NAME = import.meta.env?.VITE_COMMUNITY_NAME || "Train Crossing Alerts";
+
+    // Set page title and heading
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("page-title").textContent = COMMUNITY_NAME;
+      document.getElementById("main-heading").textContent = COMMUNITY_NAME;
+    });
+
+    // Initialize OneSignal
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(function(OneSignal) {
+      OneSignal.init({
+        appId: ONESIGNAL_APP_ID,
+      });
+    });
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f8ff; }
+    h1 { color: #333; margin-bottom: 20px; }
+    p { font-size: 18px; max-width: 600px; margin: 15px auto; line-height: 1.5; }
+    .highlight { font-weight: bold; color: #0066cc; }
+  </style>
+</head>
+<body>
+  <h1 id="main-heading">Train Crossing Alerts</h1>
+  <p>Get <span class="highlight">instant notifications</span> when a train is approaching the crossing.</p>
+  <p><strong>Click "Allow" when your browser asks for permission.</strong></p>
+  <p>You'll receive alerts like "Train approaching" and "Train has passed".</p>
+  <p>No app needed — works directly in your phone's browser!</p>
+</body>
+</html>
