@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main"]  # Change if your default branch is different (e.g., master)
 
 permissions:
   contents: read
@@ -17,20 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Build (inject env vars)
-        run: |
-          echo "VITE_ONESIGNAL_APP_ID=${{ secrets.VITE_ONESIGNAL_APP_ID }}" >> .env.production
-          echo "VITE_COMMUNITY_NAME=${{ secrets.VITE_COMMUNITY_NAME }}" >> .env.production
-          npm install  # if you have package.json, or skip if pure HTML
-          # No build needed for plain HTML, but this injects vars if using Vite later
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
-      - name: Deploy
+          path: .  # Uploads everything in root (your index.html)
+
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
