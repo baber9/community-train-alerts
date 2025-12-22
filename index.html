@@ -5,24 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Train Alerts</title>
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-  <script>
-    // Load environment variables from server (we'll serve them via a small script tag below)
-    const ONESIGNAL_APP_ID = import.meta.env?.VITE_ONESIGNAL_APP_ID || "YOUR_FALLBACK_APP_ID";
-    const COMMUNITY_NAME = import.meta.env?.VITE_COMMUNITY_NAME || "Train Crossing Alerts";
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script type="module">
+    // Safely get environment variables (VITE_ prefix required for exposure)
+    const ONESIGNAL_APP_ID = import.meta.env?.VITE_ONESIGNAL_APP_ID || "";
+    const COMMUNITY_NAME = import.meta.env?.VITE_COMMUNITY_NAME || "Community Train Alerts";
 
-    // Set page title and heading
+    // Update title and heading
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("page-title").textContent = COMMUNITY_NAME;
       document.getElementById("main-heading").textContent = COMMUNITY_NAME;
     });
 
-    // Initialize OneSignal
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(function(OneSignal) {
-      OneSignal.init({
-        appId: ONESIGNAL_APP_ID,
+    // Initialize OneSignal only if App ID is provided
+    if (ONESIGNAL_APP_ID) {
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(function(OneSignal) {
+        OneSignal.init({
+          appId: ONESIGNAL_APP_ID,
+        });
       });
-    });
+    } else {
+      console.warn("OneSignal App ID not set – notifications disabled (check env vars).");
+    }
   </script>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f8ff; }
