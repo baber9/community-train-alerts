@@ -1,9 +1,9 @@
 {
-  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "Community Train Alerts",
   "short_name": "Train Alerts",
   "description": "Instant notifications for train crossings in your community",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f0f8ff",
   "theme_color": "#0066cc",
