@@ -12,7 +12,7 @@
   <!-- manifest.json-->
   <link rel="manifest" href="manifest.json">
   
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
   <script type="module">
     const ONESIGNAL_APP_ID = "09e228dc-e3dd-4ac7-9e4e-d0fbd1b3fc92"; // UPDATE WITH APP_ID
     const COMMUNITY_NAME = "Ventana Community - Train Alerts";  // UPDATE WITH COMMUNITY_NAME
@@ -21,21 +21,16 @@
       document.getElementById("page-title").textContent = COMMUNITY_NAME;
       document.getElementById("main-heading").textContent = COMMUNITY_NAME;
     });
-
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      await OneSignal.init({
+      
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+    OneSignal.init({
         appId: ONESIGNAL_APP_ID,
+        serviceWorkerParam: { scope: "/" },
+        serviceWorkerPath: "OneSignalSDKWorker.js"
       });
     });
     
-    // OneSignal.push(function() {
-    // OneSignal.init({
-    //     appId: ONESIGNAL_APP_ID,
-    //     serviceWorkerParam: { scope: "/" },
-    //     serviceWorkerPath: "OneSignalSDKWorker.js"
-    //   });
-    // });
   </script>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f8ff; }
