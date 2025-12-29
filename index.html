@@ -9,28 +9,33 @@
   <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/069/311/291/small/vintage-steam-locomotive-black-silhouette-train-engine-vector.jpg" type="image/jpg">
   <link rel="apple-touch-icon" href="https://static.vecteezy.com/system/resources/thumbnails/069/311/291/small/vintage-steam-locomotive-black-silhouette-train-engine-vector.jpg">
 
-  <!-- manifest.json-->
+  <!-- PWA manifest (required for iOS web push) -->
   <link rel="manifest" href="manifest.json">
-  
+
+  <!-- OneSignal SDK load -->
   <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-  <script type="module">
-    const ONESIGNAL_APP_ID = "09e228dc-e3dd-4ac7-9e4e-d0fbd1b3fc92"; // UPDATE WITH APP_ID
-    const COMMUNITY_NAME = "Ventana Community - Train Alerts";  // UPDATE WITH COMMUNITY_NAME
+
+  <!-- OneSignal initialization (standard SDK with local worker) -->
+  <script>
+    // Community name (can be hardcoded or changed later)
+    const COMMUNITY_NAME = "Ventana Community - Train Alerts";
 
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("page-title").textContent = COMMUNITY_NAME;
       document.getElementById("main-heading").textContent = COMMUNITY_NAME;
     });
-      
+
+    // OneSignal initialization
     window.OneSignal = window.OneSignal || [];
     OneSignal.push(function() {
-    OneSignal.init({
-        appId: ONESIGNAL_APP_ID,
-        serviceWorkerParam: { scope: "/" },
+      OneSignal.init({
+        appId: "09e228dc-e3dd-4ac7-9e4e-d0fbd1b3fc92", // app_id
+        serviceWorkerParam: {
+          scope: '/'
+        },
         serviceWorkerPath: "OneSignalSDKWorker.js"
       });
     });
-    
   </script>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f8ff; }
