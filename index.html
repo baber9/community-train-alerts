@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Ventana Community Train Alerts</title>
+  <title id="page-title">Community Train Alerts</title>
   
   <!-- Train Favicon -->
   <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/069/311/291/small/vintage-steam-locomotive-black-silhouette-train-engine-vector.jpg" type="image/jpg">
@@ -17,12 +17,12 @@
 
   <!-- OneSignal initialization (standard SDK with local worker) -->
   <script>
-    // Community name (can be hardcoded or changed later)
-    const COMMUNITY_NAME = "Ventana Community - Train Alerts";
+    const urlParams = new URLSearchParams(window.location.search);
+    const COMMUNITY_NAME = urlParams.get('community') || "Community Train Alerts";
 
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("page-title").textContent = COMMUNITY_NAME;
-      document.getElementById("main-heading").textContent = COMMUNITY_NAME;
+      document.getElementById("page-title").textContent = COMMUNITY_NAME + " Community Train Alerts";
+      document.getElementById("main-heading").textContent = COMMUNITY_NAME + " Community Train Alerts";
     });
 
     // OneSignal initialization
@@ -30,9 +30,7 @@
     OneSignal.push(function() {
       OneSignal.init({
         appId: "09e228dc-e3dd-4ac7-9e4e-d0fbd1b3fc92", // app_id
-        serviceWorkerParam: {
-          scope: '/'
-        },
+        serviceWorkerParam: { scope: '/' },
         serviceWorkerPath: "OneSignalSDKWorker.js"
       });
     });
@@ -42,6 +40,8 @@
     h1 { color: #333; margin-bottom: 20px; }
     p { font-size: 18px; max-width: 600px; margin: 15px auto; line-height: 1.5; }
     .highlight { font-weight: bold; color: #0066cc; }
+    a.button { display: inline-block; margin: 20px; padding: 12px 24px; background: #0066cc; color: white; text-decoration: none; border-radius: 8px; font-size: 18px; }
+    a.button:hover { background: #0055aa; }
   </style>
 </head>
 <body>
@@ -55,6 +55,8 @@
   
   <p>You'll receive alerts like "Train approaching" and "Train has passed".</p>
   <p>No app download required — it works right in your browser!</p>
+
+  <a href="stats.html" class="button">View Train Statistics Dashboard</a>
 
   <p><strong>To stop receiving alerts at any time:</strong></p>
   <p>• On <strong>iPhone</strong>: Go to Settings → Safari → Advanced → Website Data → search for "baber9.github.io" → tap it → Remove. Then delete the Home Screen icon.</p>

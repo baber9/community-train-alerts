@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Train Statistics</title>
+  
+  <link rel="icon" href="https://static.vecteezy.com/system/resources/thumbnails/069/311/291/small/vintage-steam-locomotive-black-silhouette-train-engine-vector.jpg" type="image/jpg">
+  <link rel="apple-touch-icon" href="https://static.vecteezy.com/system/resources/thumbnails/069/311/291/small/vintage-steam-locomotive-black-silhouette-train-engine-vector.jpg">
+  <link rel="manifest" href="manifest.json">
+
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const COMMUNITY_NAME = urlParams.get('community') || "Community Train Statistics";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("page-title").textContent = COMMUNITY_NAME + " Community Train Statistics";
+      document.getElementById("main-heading").textContent = COMMUNITY_NAME + " Community Train Statistics";
+    });
+
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "09e228dc-e3dd-4ac7-9e4e-d0fbd1b3fc92",
+        serviceWorkerParam: { scope: "/" },
+        serviceWorkerPath: "OneSignalSDKWorker.js"
+      });
+    });
+  </script>
+
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f8ff; }
+    h1 { color: #333; }
+    #stats { margin: 40px auto; max-width: 600px; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .stat { font-size: 24px; margin: 20px 0; }
+    .value { font-weight: bold; color: #0066cc; }
+    a { color: #0066cc; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1 id="main-heading">Community Train Statistics</h1>
+  <p>Real-time data from your community train detector</p>
+
+  <div id="stats">
+    <div class="stat">Total trains detected: <span id="total" class="value">Loading...</span></div>
+    <div class="stat">Trains today: <span id="today" class="value">Loading...</span></div>
+    <div class="stat">Last train: <span id="last" class="value">Loading...</span></div>
+    <p style="font-size: 0.9em; color: #666; margin-top: 30px;"><em>Stats update every 30 seconds</em></p>
+  </div>
+
+  <p><a href="index.html">← Back to subscription page</a></p>
+
+  <p><strong>To stop receiving alerts:</strong></p>
+  <p>• On <strong>iPhone</strong>: Settings → Safari → Advanced → Website Data → search "baber9.github.io" → Remove.</p>
+  <p>• On <strong>Android</strong>: Chrome → Settings → Site Settings → Notifications → block site.</p>
+
+  <script>
+    async function loadStats() {
+      try {
+        const response = await fetch('stats.json?t=' + new Date().getTime());
+        const stats = await response.json();
+        document.getElementById('total').textContent = stats.total_trains || 0;
+        document.getElementById('today').textContent = stats.trains_today || 0;
+        document.getElementById('last').textContent = stats.last_train || "Never";
+      } catch (e) {
+        document.getElementById('stats').innerHTML = "<p>Unable to load statistics</p>";
+      }
+    }
+
+    loadStats();
+    setInterval(loadStats, 30000);
+  </script>
+</body>
+</html>

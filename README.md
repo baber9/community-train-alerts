@@ -1,54 +1,86 @@
-# Community Train Alerts
+Community Train AlertsA simple, reusable web app for community train crossing notifications using web push (no app install required). Works on Android (automatic) and iPhone (add to Home Screen).Built with OneSignal web push + GitHub Pages. Any community can use it by sharing a custom link.Live Demohttps://baber9.github.io/community-train-alerts/(Change ?community=Your%20Neighborhood in the URL to customize the name.)FeaturesInstant web push notifications when a train is detected.
+Subscribe/unsubscribe easily.
+Separate statistics dashboard (stats.html) showing:Total trains detected
+Trains today
+Last train time
 
-> Simple static web page to receive OneSignal push notifications for train crossing alerts.
+Fully static — hosted free on GitHub Pages.
+Reusable for any community (custom name via URL parameter).
 
-## Overview
+How It WorksA Python script (running on a local machine/NAS) monitors an RTSP camera audio stream using YAMNet for train horn/rumble detection.
+On detection, it sends a push notification via OneSignal API.
+Users subscribe via this web page → receive alerts on phone/browser.
+Clicking a notification opens the stats dashboard.
 
-This repository provides a minimal front-end that initializes OneSignal to deliver push notifications (e.g. "Train approaching", "Train has passed"). The UI is a single `index.html` that displays the community name and requests notification permission from users.
+Setup for Your CommunityFork this repository.
+Enable GitHub Pages (Settings → Pages → Source: main branch /root).
+Update OneSignal App ID in the code (or use your own OneSignal app).
+Share the link with your neighborhood:
 
-## Features
-- Instant browser push notifications via OneSignal
-- Lightweight single-file UI (no native app required)
+https://yourusername.github.io/your-repo-name/?community=Your%20Neighborhood%20Train%20Alerts
+
+For iPhone UsersOpen the page in Safari.
+Tap Share → "Add to Home Screen".
+Launch from the Home Screen icon.
+Allow notifications when prompted.
+
+For Android UsersOpen in Chrome.
+Allow the notification prompt.
+
+UnsubscribingReopen the page.
+Use browser settings to block notifications for the site.
+
+Filesindex.html — Subscription page
+stats.html — Statistics dashboard
+manifest.json — Required for iOS web push
+OneSignalSDKWorker.js — Service worker (downloaded from OneSignal)
+stats.json — Auto-updated by detector script (example included)
+
+Detector Script (Separate)The Python detection script runs on a local machine with camera access. It:Processes live RTSP audio.
+Detects train horns/rumble using YAMNet.
+Sends alerts via OneSignal API.
+Updates stats.json (committed to repo).
+
+Contact the maintainer for the detector code if needed.CreditsBuilt with  using:OneSignal (web push)
+TensorFlow Hub YAMNet (audio classification)
+GitHub Pages (hosting)
+
+## For iPhone Users
+- Open in Safari.
+- Tap Share → "Add to Home Screen".
+- Launch from the Home Screen icon.
+- Allow notifications when prompted.
+
+## For Android Users
+- Open in Chrome.
+- Allow the notification prompt.
+
+## Unsubscribing
+- **iPhone**: Settings → Safari → Advanced → Website Data → search for your site → Remove. Then delete the Home Screen icon.
+- **Android**: Chrome → Settings → Site Settings → Notifications → find site → Block.
+
+You can always re-subscribe by visiting the page again.
 
 ## Files
-- `index.html` — main page and OneSignal initialization
-- `LICENSE` — project license (MIT)
-- `.env` — environment variables (required; not included here)
+- `index.html` — Subscription page
+- `stats.html` — Statistics dashboard
+- `manifest.json` — Required for iOS web push
+- `OneSignalSDKWorker.js` — Service worker (downloaded from OneSignal)
+- `stats.json` — Auto-updated by detector script (example included)
 
-## Requirements
-- Modern web browser with push notification support
-- OneSignal account and an App ID
+## Detector Script (Separate)
+The Python detection script runs on a local machine with camera access. It:
+- Processes live RTSP audio.
+- Detects train horns/rumble using YAMNet.
+- Sends alerts via OneSignal API.
+- Updates `stats.json`.
 
-## Environment variables
+Contact the maintainer for the detector code if needed.
 
-This project expects environment variables to be provided at build or runtime. Do not commit secrets to the repository. The following variables are used (names only):
+## Credits
+Built with ❤️ using:
+- OneSignal (web push)
+- TensorFlow Hub YAMNet (audio classification)
+- GitHub Pages (hosting)
 
-- `VITE_ONESIGNAL_APP_ID` — OneSignal App ID used to initialize the SDK
-- `VITE_COMMUNITY_NAME` — Friendly name displayed in the UI
-
-Create a `.env` file in the project root containing the variables above when running locally or during your build process. The repository contains a `.env` file locally; its contents are private and should not be shared.
-
-## Running / Preview
-
-Quick preview (uses fallback values unless you inject environment variables):
-
-1. Open `index.html` in your browser.
-
-Recommended (to provide `import.meta.env` variables):
-
-1. Use a toolchain that provides `import.meta.env` (for example, Vite). Create a `.env` with the variables listed above.
-2. Serve the site via the chosen toolchain so that `VITE_` variables are injected at build or dev time.
-
-If you prefer a simple replace, you can edit `index.html` and set the `ONESIGNAL_APP_ID` directly, but ensure you do not commit secret keys.
-
-## Contributing
-
-Contributions are welcome. Please open an issue or submit a pull request. Avoid committing sensitive values into `.env` or other files.
-
-## License
-
-This project is licensed under the MIT License — see the `LICENSE` file for details.
-
-## Contact
-
-Repository owner: see project metadata or contact the repository maintainer.
+Feel free to fork and adapt for your community! 🚂🔔
